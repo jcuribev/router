@@ -24,13 +24,6 @@ func CreateRequest(r *http.Request) (Request, error) {
 	var data map[string]interface{}
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
-		//http.Error(w, err.Error(), http.StatusBadRequest)
-		return Request{}, err
-	}
-
-	println(data["searchTerm"].(string))
-
-	if err != nil {
 		return Request{}, err
 	}
 
@@ -41,7 +34,6 @@ func CreateRequest(r *http.Request) (Request, error) {
 	}
 
 	var str []string
-
 	request := Request{
 		SearchType:  "match",
 		Query:       query,
