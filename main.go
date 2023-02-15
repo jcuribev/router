@@ -10,8 +10,6 @@ import (
 
 const hostAdress = ":3000"
 const clientAdress = "http://127.0.0.1:5173"
-const searchAddress = "http://localhost:4080/api/emails/_search"
-const listAddress = "http://localhost:4080/api/index_name?name=f" //"http://localhost:4080/api/index?page_num=1&page_size=20&sort_by=name&desc=false&name=f"
 
 func main() {
 
@@ -30,6 +28,7 @@ func Cors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Allow-Control-Allow-Methods", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "*")
 		w.Header().Set("Allow-Control-Allow-Credentials", "true")
 
