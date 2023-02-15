@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+const dateFormat = "2006-01-02T15:04:05.000Z"
+
 type Request struct {
 	SearchType  string   `json:"search_type"`
 	Query       Query    `json:"query"`
@@ -14,32 +16,28 @@ type Request struct {
 }
 
 type Query struct {
-	Term       string `json:"term"`
-	Start_time string `json:"start_time"`
-	End_time   string `json:"end_time"`
+	Term string `json:"term"`
 }
 
-func CreateRequest(r *http.Request) (Request, error) {
+func CreateRequest(r *http.Request, searchType string) (Request, error) {
 
-	var data map[string]interface{}
+	var data map[string]any
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		return Request{}, err
 	}
 
 	query := Query{
-		Term:       data["searchTerm"].(string),
-		Start_time: "2022-06-02T00:00:00.000Z",
-		End_time:   "2023-12-02T15:28:31.894Z",
+		Term: data["searchTerm"].(string),
 	}
 
-	var str []string
+	//var str []string
 	request := Request{
-		SearchType:  "match",
+		SearchType:  searchType,
 		Query:       query,
 		From:        data["page"].(float64),
 		Max_results: data["elementsPerPage"].(float64),
-		Source:      str,
+		Source:      nil,
 	}
 
 	return request, nil
